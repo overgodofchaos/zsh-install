@@ -42,7 +42,7 @@ if ! [[ -f "$SCRIPT_DIR/install.sh" ]];  then
 fi
 
 
-# Install pascakes
+# Install packages
 if [[ "$SUDO" == "true" ]]; then
     sudo apt-get update
     sudo apt-get install -y zsh git curl fzf
