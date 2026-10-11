@@ -2,56 +2,55 @@
 
 # Ensure the script is running in bash
 if [[ -z "$BASH_VERSION" ]]; then
-    echo "ERROR: bash required" >&2
+    echo "Error: bash required" >&2
     exit 1
 fi
 
 set -euo pipefail
 
-# Check the environment
-if command -v apt-get &> /dev/null; then
-    PM="apt"
-else
-    echo "Only apt-get is supported"
-    exit 1
-fi
-
-SUDO="false"
-if [[ $EUID -eq 0 ]]; then
-    SUDO="root"
-elif command -v sudo &> /dev/null; then
-    SUDO="true"
-fi
-
 # Check previous installation
 if [[ -f "$HOME/.zshrc" ]]; then
-    echo ".zshrc already exists"
+    echo "Error: .zshrc already exists"
     exit 1
 fi
 
 if [[ -f "$HOME/.zsh_plugins.txt" ]]; then
-    echo ".zsh_plugins.txt already exists"
+    echo "Error: .zsh_plugins.txt already exists"
     exit 1
 fi
 
 # Resolve the script directory path
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if ! [[ -f "$SCRIPT_DIR/install.sh" ]];  then
-    echo "The script directory could not be determined correctly."
+    echo "Error: The script directory could not be determined correctly."
+    exit 1
+fi
+
+# Check packages
+PACKAGES=("zsh" "curl" "git")
+REQUIRED_PKG=""
+
+for pkg in "$PACKAGES[@]"; do
+    if ! command -v "$pkg" &> /dev/null; then
+        REQUIRED_PKG="&REQUIRED_PKG &pkg"
+    fi
+done
+
+REQUIRED_PKG=$(echo "$REQUIRED_PKG" | xargs) # Trim leading/trailing whitespace
+
+if [[ -n "$REQUIRED_PKG" ]]; then
+    echo "Error: The following required packages are missing: $REQUIRED_PKG"
+    echo "Please install them and try again."
     exit 1
 fi
 
 
-# Install packages
-if [[ "$SUDO" == "true" ]]; then
-    sudo apt-get update
-    sudo apt-get install -y zsh git curl fzf
-elif [[ "$SUDO" == "root" ]]; then
-    apt-get update
-    apt-get install -y zsh git curl fzf
-else
-    su - -c 'apt-get update && apt-get install -y zsh git curl fzf'
+# Check and install fzf if needed
+if ! command -v fzf &> /dev/null; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --bin
 fi
+
 
 # Install antidote
 ANTIDOTE_DIR="$HOME/.antidote"

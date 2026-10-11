@@ -3,6 +3,11 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# fzf
+if ! command -v fzf &> /dev/null; then
+    export PATH="$HOME/.fzf/bin:$PATH"
+fi
+
 # antidote
 source ${ZDOTDIR:-$HOME}/.antidote/antidote.zsh
 antidote load
