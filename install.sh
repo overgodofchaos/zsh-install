@@ -46,9 +46,9 @@ fi
 
 
 # Check and install fzf if needed
-if [[ ! -d "$HOME/.fzf" ]]; then
+if ! command -v "fzf" &> /dev/null && [[ ! -d "$HOME/.fzf" ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
-    bash $HOME/.fzf/install --bin
+    $HOME/.fzf/install --bin
 fi
 
 
