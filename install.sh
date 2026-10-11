@@ -30,9 +30,9 @@ fi
 PACKAGES=("zsh" "curl" "git")
 REQUIRED_PKG=""
 
-for pkg in "$PACKAGES[@]"; do
+for pkg in "${PACKAGES[@]}"; do
     if ! command -v "$pkg" &> /dev/null; then
-        REQUIRED_PKG="&REQUIRED_PKG &pkg"
+        REQUIRED_PKG="${REQUIRED_PKG} $pkg"
     fi
 done
 
@@ -46,9 +46,9 @@ fi
 
 
 # Check and install fzf if needed
-if ! command -v fzf &> /dev/null; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --bin
+if [[ ! -d "$HOME/.fzf" ]]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+    $HOME/.fzf/install --bin
 fi
 
 
