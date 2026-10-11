@@ -1,0 +1,21 @@
+# Oh-My-Zsh compatibility + libraries
+getantidote/use-omz
+ohmyzsh/ohmyzsh path:lib
+
+# OMZ plugins
+ohmyzsh/ohmyzsh path:plugins/git
+ohmyzsh/ohmyzsh path:plugins/docker
+ohmyzsh/ohmyzsh path:plugins/docker-compose
+ohmyzsh/ohmyzsh path:plugins/sudo # double-Esc to add sudo
+ohmyzsh/ohmyzsh path:plugins/extract
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages
+ohmyzsh/ohmyzsh path:plugins/command-not-found
+
+# General plugins
+rupa/z
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-completions
+Aloxaf/fzf-tab
+romkatv/powerlevel10k
