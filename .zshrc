@@ -1,3 +1,7 @@
+# env
+export LANG=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8
+
 # p10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
